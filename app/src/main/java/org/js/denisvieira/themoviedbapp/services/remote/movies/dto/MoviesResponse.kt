@@ -1,6 +1,7 @@
-package org.js.denisvieira.themoviedbapp.domain.model.movie
+package org.js.denisvieira.themoviedbapp.services.remote.movies.dto
 
 import com.squareup.moshi.Json
+import org.js.denisvieira.themoviedbapp.domain.model.movie.Movie
 
 data class MoviesResponse(
     val page: Int,

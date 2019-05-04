@@ -4,31 +4,121 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'androidx.navigation.safeargs'
+
 android {
-    compileSdkVersion 28
+
+    compileSdkVersion global_compileSdkVersion
+    buildToolsVersion global_buildToolsVersion
+
     defaultConfig {
         applicationId "org.js.denisvieira.themoviedbapp"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion global_minSdkVersion
+        targetSdkVersion global_targetSdkVersion
+        versionCode global_versionCode
+        versionName global_versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
+
+    dataBinding {
+        enabled true
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    signingConfigs {
+        themoviesdb_prod_keystore {
+            keyAlias 'themoviesdb_prod_key'
+            keyPassword 'themoviesdb_prod'
+            storeFile file('themoviesdb_prod.keystore')
+            storePassword 'themoviesdb_prod'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['mockRelease', 'stageRelease', 'prodRelease']
         }
+    }
+
+
+    flavorDimensions "default"
+
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+            buildConfigField "String", "BASE_URL", "\"http://fake.themoviesdb.com.br\""
+            resValue "string", "login_version", ("Mock " + global_versionName)
+        }
+        stage {
+            applicationIdSuffix = ".stage"
+            buildConfigField "String", "BASE_URL", "\"https://stage.api.themoviedb.org/3/\""
+            buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"1f54bd990f1cdfb230adb312546d765d\""
+            resValue "string", "login_version", ("Stage " + global_versionName)
+        }
+        prod {
+            signingConfig signingConfigs.themoviesdb_prod_keystore
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"1f54bd990f1cdfb230adb312546d765d\""
+            resValue "string", "login_version", (" " + global_versionName)
+        }
+
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // ANDROIDX LIBRARIES
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+    implementation 'androidx.core:core-ktx:1.1.0-alpha05'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
+    implementation 'androidx.fragment:fragment-ktx:1.1.0-alpha07'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    // ANDROID DATABINDING
+    kapt 'com.android.databinding:compiler:3.3.1'
+
+    // MULTIDEX SUPPORT
+    implementation 'com.android.support:multidex:1.0.3'
+
+    // Architecture Components
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
+
+    // NAVIGATION LIBRARIES
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+
+    // Reactive eXtensions
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'io.reactivex:rxjava:1.1.8'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+
+    // Rest
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+
+
+    //  TESTS
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }

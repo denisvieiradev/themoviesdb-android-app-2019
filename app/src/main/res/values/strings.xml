@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">The Movie DBApp</string>
+    <string name="app_name">The Movies DB APP</string>
+
+    <string name="unauthorized">Incorrect e-mail or password.</string>
+    <string name="internal_error">An internal error occurred.</string>
+    <string name="unknown_error">Unknown error, contact your system administrator</string>
+    <string name="no_internet_connection_error">No internet connection</string>
+
+
+    <string name="search_title">Search</string>
+
+
+    <string name="movie_detail_title">Movie Details</string>
+    <string name="movie_detail_release">Release</string>
+    <string name="movie_detail_popularity">Popularity</string>
+    <string name="movie_detail_runtime">Run Time</string>
+    <string name="movie_detail_votes">%1$s Votes</string>
+    <string name="movie_detail_minutes">%1$s Minutes</string>
+    <string name="movie_detail_descriptions_movie_poster_photo">Movie Poster Photo</string>
+    <string name="movie_detail_descriptions_movie_backdrop_photo">Movie Backdrop Photo</string>
+    <string name="movie_detail_descriptions_movie_imdb_logo">Imdb Logo</string>
+    <string name="invalid_date">Invalid Date</string>
+
 </resources>

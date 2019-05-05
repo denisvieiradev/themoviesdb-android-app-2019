@@ -29,8 +29,8 @@ class MoviesRemoteDataSourceImpl(private val mMoviesApiDataSource: MoviesApiData
 
 
     @SuppressLint("CheckResult")
-    override fun getPopularMovies(page: Int, callback: RemoteDataSourceCallback<List<Movie>>) {
-        mMoviesApiDataSource.popularMovies(page)
+    override fun getUpcomingMovies(page: Int, callback: RemoteDataSourceCallback<List<Movie>>) {
+        mMoviesApiDataSource.upcomingMovies(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { callback.isLoading(true) }

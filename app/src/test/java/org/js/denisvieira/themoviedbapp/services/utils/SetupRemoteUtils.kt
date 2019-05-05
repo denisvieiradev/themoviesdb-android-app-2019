@@ -1,4 +1,4 @@
-package br.com.stant.obras.service.remote.utils
+package org.js.denisvieira.themoviedbapp.services.utils
 
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins

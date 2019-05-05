@@ -1,12 +1,12 @@
 package org.js.denisvieira.themoviedbapp.services.remote.movies
 
-import br.com.stant.obras.service.remote.utils.SetupRemoteUtils
+import org.js.denisvieira.themoviedbapp.services.utils.SetupRemoteUtils
 import org.mockito.InjectMocks
 import org.mockito.Mock
 
 
 /**
- * Unit tests for the implementation of {@link ConstructionSiteRemoteDataSourceImpl }
+ * Unit tests for the implementation of {@link MoviesRemoteDataSourceImpl }
  */
 
 open class MoviesRemoteDataSourceBaseTest : SetupRemoteUtils(){
@@ -16,7 +16,6 @@ open class MoviesRemoteDataSourceBaseTest : SetupRemoteUtils(){
 
     @Mock
     lateinit var moviesApiDataSource: MoviesApiDataSource
-
 
 
 }

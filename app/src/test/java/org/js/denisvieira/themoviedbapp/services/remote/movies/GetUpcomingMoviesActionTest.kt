@@ -2,8 +2,8 @@ package org.js.denisvieira.themoviedbapp.services.remote.movies
 
 import io.reactivex.Observable
 import org.js.denisvieira.themoviedbapp.domain.model.movie.Movie
-import org.js.denisvieira.themoviedbapp.services.BaseRemoteDataSource.RemoteDataSourceCallback
 import org.js.denisvieira.themoviedbapp.domain.model.movie.builder.MovieBuilder
+import org.js.denisvieira.themoviedbapp.services.BaseRemoteDataSource.RemoteDataSourceCallback
 import org.js.denisvieira.themoviedbapp.services.remote.movies.dto.MoviesResponse
 import org.junit.Before
 import org.junit.Test
@@ -28,21 +28,15 @@ class GetUpcomingMoviesActionTest {
         val moviesResponse = getUpcomingMoviesResponse()
 
         private fun getUpcomingMoviesResponse(): MoviesResponse {
-            return MoviesResponse(
-                1,
-                getMovies(), 1, 3
-            )
-        }
-
-        private fun getMovies(): List<Movie> {
             val movies : MutableList<Movie>? = mutableListOf(
                 MovieBuilder().oneMovieResponse().build(),
                 MovieBuilder().oneMovieResponse().build()
             )
-
-            return movies!!.toList()
+            return MoviesResponse(
+                1,
+                movies!!.toList(), 1, 3
+            )
         }
-
     }
 
     class ContextOnSuccess : DescribeGetUpcomingMovies() {

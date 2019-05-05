@@ -55,19 +55,19 @@ android {
         mock {
             applicationIdSuffix = ".mock"
             buildConfigField "String", "BASE_URL", "\"http://fake.themoviesdb.com.br\""
-            buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"1f54bd990f1cdfb230adb312546d765d\""
+            buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"9c2c3dd0ab59829a041af7515e0e0eea\""
             resValue "string", "login_version", ("Mock " + global_versionName)
         }
         stage {
             applicationIdSuffix = ".stage"
             buildConfigField "String", "BASE_URL", "\"https://stage.api.themoviedb.org/3/\""
-            buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"1f54bd990f1cdfb230adb312546d765d\""
+            buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"9c2c3dd0ab59829a041af7515e0e0eea\""
             resValue "string", "login_version", ("Stage " + global_versionName)
         }
         prod {
             signingConfig signingConfigs.themoviesdb_prod_keystore
             buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
-            buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"1f54bd990f1cdfb230adb312546d765d\""
+            buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"9c2c3dd0ab59829a041af7515e0e0eea\""
             resValue "string", "login_version", (" " + global_versionName)
         }
 
@@ -106,15 +106,16 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 
     // Rest
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.okhttp:okhttp:2.7.5'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.0'
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+
 
 
     //  TESTS

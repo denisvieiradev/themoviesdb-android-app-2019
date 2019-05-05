@@ -6,6 +6,7 @@ import org.js.denisvieira.themoviedbapp.domain.model.genre.builder.GenreBuilder
 import org.js.denisvieira.themoviedbapp.domain.model.movie.Movie
 import org.js.denisvieira.themoviedbapp.domain.model.movie.builder.MovieBuilder
 import org.js.denisvieira.themoviedbapp.domain.usecases.UseCase
+import org.js.denisvieira.themoviedbapp.domain.usecases.UseCase.UseCaseCallback
 import org.js.denisvieira.themoviedbapp.services.BaseRemoteDataSource
 import org.js.denisvieira.themoviedbapp.services.remote.genres.GenresRemoteDataSource
 import org.junit.Before
@@ -37,7 +38,7 @@ class GetMovieGenresUseCaseActionTest {
         protected lateinit var genresRemoteDataSource: GenresRemoteDataSource
 
         @Mock
-        protected lateinit var useCaseCallback: UseCase.UseCaseCallback<List<Genre>>
+        protected lateinit var useCaseCallback: UseCaseCallback<List<Genre>>
 
         @Before
         fun setUp() {

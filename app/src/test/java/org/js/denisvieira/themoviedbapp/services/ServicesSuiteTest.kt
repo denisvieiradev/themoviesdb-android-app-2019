@@ -8,4 +8,4 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
     RemoteDataSourceSuiteTest::class
 )
-class ServiceSuiteTest
+class ServicesSuiteTest

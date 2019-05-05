@@ -16,12 +16,13 @@ interface MoviesApiDataSource {
         @Query("page") page: Int
     ): Observable<Response<MoviesResponse>>
 
-    @GET("movie/popular")
-    fun popularMovies(
+    @GET("movie/upcoming")
+    fun upcomingMovies(
         @Query("page") page: Int
     ): Observable<Response<MoviesResponse>>
 
     @GET("movie/{id}")
     fun movie(@Path("id") id: Int): Observable<Response<Movie>>
+
 
 }

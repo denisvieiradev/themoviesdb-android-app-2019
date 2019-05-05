@@ -7,7 +7,7 @@ interface MoviesRemoteDataSource {
 
     fun searchMovies(queryText :String, page :Int, callback: RemoteDataSourceCallback<List<Movie>>)
 
-    fun getPopularMovies(page : Int, callback: RemoteDataSourceCallback<List<Movie>>)
+    fun getUpcomingMovies(page : Int, callback: RemoteDataSourceCallback<List<Movie>>)
 
     fun getMovie(id: Int, callback: RemoteDataSourceCallback<Movie>)
 

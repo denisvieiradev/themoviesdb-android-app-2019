@@ -5,8 +5,8 @@ import io.reactivex.Observable.create
 import okhttp3.Headers
 import org.js.denisvieira.themoviedbapp.R
 import org.js.denisvieira.themoviedbapp.domain.model.movie.Movie
+import org.js.denisvieira.themoviedbapp.domain.model.movie.builder.MovieBuilder
 import org.js.denisvieira.themoviedbapp.services.remote.movies.dto.MoviesResponse
-import org.js.denisvieira.themoviedbapp.domain.model.movie.builders.createOneMovieBuilder
 import retrofit2.Response
 import java.util.*
 import kotlin.concurrent.schedule
@@ -17,7 +17,7 @@ class FakeMoviesRemoteDataSource : MoviesApiDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun popularMovies(page: Int): Observable<Response<MoviesResponse>> {
+    override fun upcomingMovies(page: Int): Observable<Response<MoviesResponse>> {
         return create {
             Timer().schedule(2000){
                 val upcomingMoviesResponse = getUpcomingMoviesResponse()
@@ -42,8 +42,8 @@ class FakeMoviesRemoteDataSource : MoviesApiDataSource {
 
     private fun getMovies(): List<Movie> {
         val movies : MutableList<Movie>? = mutableListOf(
-            createOneMovieBuilder().build(),
-            createOneMovieBuilder().build()
+            MovieBuilder().oneMovieResponse().build(),
+            MovieBuilder().oneMovieResponse().build()
         )
 
         return movies!!.toList()

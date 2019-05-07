@@ -21,13 +21,13 @@ import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.adapters
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.dto.MovieDto
 import org.js.denisvieira.themoviedbapp.application.util.WrapContentLinearLayoutManager
 import org.js.denisvieira.themoviedbapp.application.util.extensions.formatToServerDateDefaults
-import org.js.denisvieira.themoviedbapp.application.util.extensions.observeEvent
 import org.js.denisvieira.themoviedbapp.application.util.showAlertErrorByStatusCode
 import org.js.denisvieira.themoviedbapp.domain.data.Cache
 import org.js.denisvieira.themoviedbapp.domain.model.genre.Genre
 import org.js.denisvieira.themoviedbapp.domain.model.movie.Movie
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class SelectMovieFragment : Fragment() {
 
@@ -190,15 +190,14 @@ class SelectMovieFragment : Fragment() {
         return queryText.isBlank() && currentSearchText != null
     }
 
-
-    fun searchMoviesAfterSearch(queryText: String = "") {
+    private fun searchMoviesAfterSearch(queryText: String = "") {
         resetStateOnSubmitTextOnSearch()
 
         if(queryText.isBlank()){
             mSelectMovieViewModel.loadPopularMovies(mCurrentPage)
         } else {
+            mSelectMovieAdapter.resetStatus()
             mSelectMovieViewModel.searchMovies(queryText, mCurrentPage)
-            hideKeyboard()
         }
     }
 
@@ -219,7 +218,7 @@ class SelectMovieFragment : Fragment() {
     }
 
     private fun startOnSuccessMainDataObserver() {
-        mSelectMovieViewModel.mMainSelectMovieObservers.onSuccessMainDataObserver.observeEvent(this) {response ->
+        mSelectMovieViewModel.onSuccessMainDataObserver.observe(this, Observer { response ->
             if(isNotNullOrEmpty(response)){
                 val newMovies = mapMovieDtos(response)
 
@@ -230,11 +229,11 @@ class SelectMovieFragment : Fragment() {
 
                 mBinding.progressBar.visibility = View.GONE
             }
-        }
+        })
     }
 
     private fun startOnErrorMainDataObserver() {
-        mSelectMovieViewModel.mMainSelectMovieObservers.onErrorMainDataObserver.observe(this, Observer {
+        mSelectMovieViewModel.onErrorMainDataObserver.observe(this, Observer {
             if(it != null)
                 showAlertErrorByStatusCode(it,context!!)
         })
@@ -281,7 +280,7 @@ class SelectMovieFragment : Fragment() {
     }
 
     private fun startIsLoadingMainDataObserver() {
-        mSelectMovieViewModel.mMainSelectMovieObservers.isLoadingMainDataObserver.observe(this, Observer {
+        mSelectMovieViewModel.isLoadingMainDataObserver.observe(this, Observer {
             if(it == true) showLoadingRecyclerViewFooter() else hideLoadingRecyclerViewFooter()
         })
     }

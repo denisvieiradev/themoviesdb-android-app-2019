@@ -22,5 +22,6 @@
     <string name="movie_detail_descriptions_movie_backdrop_photo">Imagem de Fundo do Filme</string>
     <string name="movie_detail_descriptions_movie_imdb_logo">Imdb Logo</string>
     <string name="invalid_date">Data Inválida</string>
+    <string name="search">Buscar Filmes</string>
 
 </resources>

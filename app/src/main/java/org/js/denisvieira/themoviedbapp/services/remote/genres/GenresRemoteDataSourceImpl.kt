@@ -13,6 +13,8 @@ class GenresRemoteDataSourceImpl(private val mGenresApiDataSource: GenresApiData
         mGenresApiDataSource.movieGenres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { callback.isLoading(true) }
+                .doAfterTerminate { callback.isLoading(false) }
                 .subscribe(
                         {
                             callback.onSuccess(it.body()!!.genres)

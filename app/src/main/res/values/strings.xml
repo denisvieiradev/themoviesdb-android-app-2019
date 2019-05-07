@@ -20,5 +20,6 @@
     <string name="movie_detail_descriptions_movie_backdrop_photo">Movie Backdrop Photo</string>
     <string name="movie_detail_descriptions_movie_imdb_logo">Imdb Logo</string>
     <string name="invalid_date">Invalid Date</string>
+    <string name="search">Search Movies</string>
 
 </resources>

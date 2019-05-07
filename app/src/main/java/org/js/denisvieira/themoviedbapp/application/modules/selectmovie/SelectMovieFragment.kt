@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.select_movie_fragment.*
 import org.js.denisvieira.themoviedbapp.R
@@ -21,6 +22,7 @@ import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.adapters
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.dto.MovieDto
 import org.js.denisvieira.themoviedbapp.application.util.WrapContentLinearLayoutManager
 import org.js.denisvieira.themoviedbapp.application.util.extensions.formatToServerDateDefaults
+import org.js.denisvieira.themoviedbapp.application.util.extensions.observeEvent
 import org.js.denisvieira.themoviedbapp.application.util.showAlertErrorByStatusCode
 import org.js.denisvieira.themoviedbapp.domain.data.Cache
 import org.js.denisvieira.themoviedbapp.domain.model.genre.Genre
@@ -55,22 +57,19 @@ class SelectMovieFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-
         return mBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         mSelectMovieViewModel = ViewModelProviders.of(this)
             .get(SelectMovieViewModel::class.java)
-
 
         mSelectMovieViewModel.loadMovieGenres()
 
         startObservers()
         setupComponents()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -91,15 +90,11 @@ class SelectMovieFragment : Fragment() {
         selectMovieMainRecyclerView.addOnItemTouchListener(RecyclerTouchListener(context!!,
             selectMovieMainRecyclerView, object : RecyclerTouchListener.SimpleOnClickListener {
                 override fun onClick(view: View, position: Int) {
-//                    val intent = Intent(applicationContext, MovieDetailActivity::class.java)
-//                    val bundle = Bundle()
-//                    val itemId = mSelectMovieAdapter.movies[position].id
-//
-//                    bundle.putInt(KEY_MOVIE_ID, itemId!!)
-//
-//                    intent.putExtras(bundle)
-//
-//                    startActivity(intent)
+                    val itemId = mSelectMovieAdapter.movies[position].id
+                    val actionToMovieDetail = SelectMovieFragmentDirections.
+                        actionSelectMovieFragmentToMovieDetailFragment().setMovieId(itemId!!)
+
+                    findNavController().navigate(actionToMovieDetail)
                 }
 
             }))
@@ -218,7 +213,7 @@ class SelectMovieFragment : Fragment() {
     }
 
     private fun startOnSuccessMainDataObserver() {
-        mSelectMovieViewModel.onSuccessMainDataObserver.observe(this, Observer { response ->
+        mSelectMovieViewModel.mSelectMovieObservers.onSuccessMainDataObserver.observeEvent(viewLifecycleOwner){ response ->
             if(isNotNullOrEmpty(response)){
                 val newMovies = mapMovieDtos(response)
 
@@ -229,11 +224,11 @@ class SelectMovieFragment : Fragment() {
 
                 mBinding.progressBar.visibility = View.GONE
             }
-        })
+        }
     }
 
     private fun startOnErrorMainDataObserver() {
-        mSelectMovieViewModel.onErrorMainDataObserver.observe(this, Observer {
+        mSelectMovieViewModel.mSelectMovieObservers.onErrorMainDataObserver.observe(viewLifecycleOwner, Observer {
             if(it != null)
                 showAlertErrorByStatusCode(it,context!!)
         })
@@ -268,7 +263,7 @@ class SelectMovieFragment : Fragment() {
     }
 
     private fun startLoadGenresSuccessObserver() {
-        mSelectMovieViewModel.loadGenresSuccessObserver.observe(this, Observer {
+        mSelectMovieViewModel.loadGenresSuccessObserver.observe(viewLifecycleOwner, Observer {
             setGenresInCache(it)
             mSelectMovieViewModel.loadPopularMovies(firstPage)
         })
@@ -280,7 +275,7 @@ class SelectMovieFragment : Fragment() {
     }
 
     private fun startIsLoadingMainDataObserver() {
-        mSelectMovieViewModel.isLoadingMainDataObserver.observe(this, Observer {
+        mSelectMovieViewModel.mSelectMovieObservers.isLoadingMainDataObserver.observe(this, Observer {
             if(it == true) showLoadingRecyclerViewFooter() else hideLoadingRecyclerViewFooter()
         })
     }

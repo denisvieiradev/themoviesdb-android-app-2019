@@ -6,9 +6,7 @@
     <string name="unknown_error">Unknown error, contact your system administrator</string>
     <string name="no_internet_connection_error">No internet connection</string>
 
-
     <string name="search_title">Search</string>
-
 
     <string name="movie_detail_title">Movie Details</string>
     <string name="movie_detail_release">Release</string>

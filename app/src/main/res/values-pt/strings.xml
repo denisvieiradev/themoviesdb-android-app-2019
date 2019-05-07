@@ -2,15 +2,12 @@
 
     <string name="app_name">The Movies DB APP</string>
 
-
     <string name="unauthorized">E-mail ou senha incorretos.</string>
     <string name="internal_error">Ocorreu um erro interno.</string>
     <string name="unknown_error">Erro desconhecido! Contate o administrador do sistema</string>
     <string name="no_internet_connection_error">Sem conexão com a internet</string>
 
-
     <string name="search_title">Search</string>
-
 
     <string name="movie_detail_title">Detalhes do Filme</string>
     <string name="movie_detail_release">Lançamento</string>

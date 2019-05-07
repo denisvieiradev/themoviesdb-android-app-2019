@@ -8,6 +8,27 @@
     <fragment
         android:id="@+id/selectMovieFragment"
         android:name="org.js.denisvieira.themoviedbapp.application.modules.selectmovie.SelectMovieFragment"
-        android:label="SelectMovieFragment" />
+        android:label="SelectMovieFragment"
+        tools:layout="@layout/select_movie_fragment">
+
+        <action android:id="@+id/action_selectMovieFragment_to_movieDetailFragment"
+                app:destination="@id/movieDetailFragment">
+            <argument
+                    android:name="movie_id"
+                    app:argType="integer"
+                    android:defaultValue="0" />
+        </action>
+
+    </fragment>
+
+    <fragment android:id="@+id/movieDetailFragment"
+              android:name="org.js.denisvieira.themoviedbapp.application.modules.moviedetail.MovieDetailFragment"
+              android:label="MovieDetailFragment">
+        <argument
+                android:name="movie_id"
+                app:argType="integer"
+                android:defaultValue="0" />
+
+    </fragment>
 
 </navigation>

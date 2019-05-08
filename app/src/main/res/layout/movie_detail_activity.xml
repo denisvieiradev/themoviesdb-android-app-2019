@@ -33,10 +33,10 @@
             tools:src="@drawable/image_backdrop" />
 
         <com.google.android.material.appbar.AppBarLayout
+
             android:id="@+id/movieDetailappBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="2dp">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/movieDetailToolbar"

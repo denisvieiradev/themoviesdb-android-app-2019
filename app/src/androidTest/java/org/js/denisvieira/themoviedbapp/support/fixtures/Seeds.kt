@@ -1,6 +1,6 @@
-package br.com.stant.stant_android_occurrences.support.fixtures
+package org.js.denisvieira.themoviedbapp.support.fixtures
 
-import br.com.stant.stant_android_occurrences.support.models.UserLogin
+import org.js.denisvieira.themoviedbapp.support.models.UserLogin
 
 object Seeds {
     const val DEFAULT_EMAIL    = "stant@stant.com.br"
@@ -13,8 +13,8 @@ object Seeds {
         val default = UserLogin(email = DEFAULT_EMAIL, password = DEFAULT_EMAIL)
         val complete = UserLogin(email = DEFAULT_EMAIL, password = DEFAULT_PASSWORD)
         val withoutData = UserLogin(email = EMPTY_DATA, password = EMPTY_DATA)
-        val wrongEmail = UserLogin(email = Seeds.WRONG_EMAIL, password = DEFAULT_PASSWORD)
-        val wrongPassword = UserLogin(email = Seeds.DEFAULT_EMAIL, password = WRONG_PASSWORD)
+        val wrongEmail = UserLogin(email = WRONG_EMAIL, password = DEFAULT_PASSWORD)
+        val wrongPassword = UserLogin(email = DEFAULT_EMAIL, password = WRONG_PASSWORD)
         val withoutEmail = UserLogin(email = EMPTY_DATA, password = DEFAULT_PASSWORD)
         val withoutPassword = UserLogin(email = DEFAULT_EMAIL, password = EMPTY_DATA)
     }

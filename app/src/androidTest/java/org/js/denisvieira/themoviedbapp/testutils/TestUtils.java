@@ -1,18 +1,18 @@
 package org.js.denisvieira.themoviedbapp.testutils;
 
 import android.content.Context;
-import android.support.design.widget.TextInputLayout;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
+import androidx.test.espresso.matcher.ViewMatchers;
+import com.google.android.material.textfield.TextInputLayout;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.internal.matchers.TypeSafeMatcher;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static java.lang.Thread.sleep;
 
 public class TestUtils {

@@ -64,7 +64,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun startOnSuccessMainDataObserver() {
-        mDetailViewModel.onSuccessMainDataObserver.observe(this, androidx.lifecycle.Observer {
+        mDetailViewModel.onSuccessMainDataObserver.observe(this, Observer {
             mBinding.movie = mapMovieDetailDto(it!!)
         })
     }

@@ -1,15 +1,15 @@
-package br.com.stant.stant_android_occuPagerrences.new.pages
+package org.js.denisvieira.themoviedbapp.pages
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.NoMatchingViewException
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.ViewInteraction
-import android.support.test.espresso.action.ViewActions
-import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.matcher.ViewMatchers
 import android.view.View
 import android.widget.TextView
-import br.com.stant.stant_android_occurrences.support.customs.ViewWith
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.ViewMatchers
+import org.js.denisvieira.themoviedbapp.support.customs.ViewWith
 import junit.framework.AssertionFailedError
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf

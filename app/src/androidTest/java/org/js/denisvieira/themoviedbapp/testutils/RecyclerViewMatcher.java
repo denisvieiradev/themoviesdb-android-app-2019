@@ -1,20 +1,21 @@
 package org.js.denisvieira.themoviedbapp.testutils;
 
 import android.content.res.Resources;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.test.espresso.matcher.BoundedMatcher;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import androidx.annotation.IdRes;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.matcher.BoundedMatcher;
+import io.reactivex.annotations.NonNull;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.Checks.checkNotNull;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
-import static br.com.stant.stant_android_occurrences.testutils.ColorUtils.withBgColor;
+import static androidx.core.util.Preconditions.checkNotNull;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.allOf;
+import static org.js.denisvieira.themoviedbapp.testutils.ColorUtils.withBgColor;
 
 public class RecyclerViewMatcher {
 
@@ -119,24 +120,6 @@ public class RecyclerViewMatcher {
                 return itemMatcher.matches(viewHolder.itemView);
             }
         };
-    }
-
-    public static int getCountFromRecyclerView(@IdRes int RecyclerViewId) {
-        int[] COUNT = new int[1];
-        Matcher matcher = new TypeSafeMatcher<View>() {
-            @Override
-            protected boolean matchesSafely(View item) {
-                COUNT[0] = ((RecyclerView) item).getAdapter().getItemCount();
-                return true;
-            }
-            @Override
-            public void describeTo(Description description) {
-            }
-        };
-        onView(allOf(withId(RecyclerViewId),isDisplayed())).check(matches(matcher));
-        int result = COUNT[0];
-        COUNT[0] = 0;
-        return result;
     }
 
 }

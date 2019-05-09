@@ -4,9 +4,8 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import br.com.stant.stant_android_occurrences.support.createPage
-import br.com.stant.stant_android_occurrences.support.fixtures.Seeds
+import org.js.denisvieira.themoviedbapp.support.createPage
+import org.js.denisvieira.themoviedbapp.support.fixtures.Seeds
 import org.hamcrest.Matchers
 import org.js.denisvieira.themoviedbapp.R
 import org.js.denisvieira.themoviedbapp.modules.BaseFragmentTest

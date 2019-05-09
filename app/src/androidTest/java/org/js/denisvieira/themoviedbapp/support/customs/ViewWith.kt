@@ -1,4 +1,4 @@
-package br.com.stant.stant_android_occurrences.support.customs
+package org.js.denisvieira.themoviedbapp.support.customs
 
 import android.content.res.Resources
 import android.view.View

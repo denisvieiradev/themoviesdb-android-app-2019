@@ -1,6 +1,6 @@
-package br.com.stant.stant_android_occurrences.support
+package org.js.denisvieira.themoviedbapp.support
 
-import br.com.stant.stant_android_occuPagerrences.new.pages.Page
+import org.js.denisvieira.themoviedbapp.pages.Page
 
 inline fun <reified T : Page> createPage(): T {
     val page = T::class.constructors.first().call()

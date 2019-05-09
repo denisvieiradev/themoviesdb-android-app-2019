@@ -1,11 +1,11 @@
 package org.js.denisvieira.themoviedbapp.testutils;
 
 import android.graphics.drawable.ColorDrawable;
-import android.support.test.espresso.intent.Checks;
-import android.support.test.espresso.matcher.BoundedMatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import androidx.test.espresso.intent.Checks;
+import androidx.test.espresso.matcher.BoundedMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;

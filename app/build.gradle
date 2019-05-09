@@ -116,13 +116,24 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 
-
-
     //  TESTS
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    // Espresso UI Testing
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.guava'
+        exclude module: 'espresso-idling-resource'
+    })
+    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:2.2.2', {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    })
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
 
     // required if you want to use Mockito for unit tests
     testImplementation 'org.mockito:mockito-core:2.27.0'

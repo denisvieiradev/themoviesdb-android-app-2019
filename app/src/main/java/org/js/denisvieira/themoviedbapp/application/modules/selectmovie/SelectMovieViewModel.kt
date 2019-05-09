@@ -1,7 +1,6 @@
 package org.js.denisvieira.themoviedbapp.application.modules.selectmovie
 
-import br.com.stant.obras.application.utils.events.Event
-import br.com.stant.obras.application.utils.events.SingleLiveEvent
+import androidx.lifecycle.MutableLiveData
 import org.js.denisvieira.themoviedbapp.application.helper.BaseViewModel
 import org.js.denisvieira.themoviedbapp.application.injections.InjectionUseCase.provideGetMovieGenresUsecase
 import org.js.denisvieira.themoviedbapp.application.injections.InjectionUseCase.provideGetPopularMovies
@@ -16,7 +15,7 @@ class SelectMovieViewModel : BaseViewModel<List<Movie>>() {
     private val mGetMovieGenresUsecase    = provideGetMovieGenresUsecase()
     private val mSearchMoviesUseCase      = provideSearchMoviesUseCase()
 
-    val loadGenresSuccessObserver = SingleLiveEvent<List<Genre>>()
+    val loadGenresSuccessObserver = MutableLiveData<List<Genre>>()
 
     fun searchMovies(queryText: String, page: Int) {
         mSearchMoviesUseCase.searchMovies(queryText, page, object : UseCaseCallback<List<Movie>> {

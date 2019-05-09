@@ -1,7 +1,6 @@
 package org.js.denisvieira.themoviedbapp.domain.model.movie.builder
 
 import org.js.denisvieira.themoviedbapp.domain.model.genre.Genre
-import org.js.denisvieira.themoviedbapp.domain.model.genre.builder.GenreBuilder
 import org.js.denisvieira.themoviedbapp.domain.model.movie.Movie
 
 class MovieBuilder {

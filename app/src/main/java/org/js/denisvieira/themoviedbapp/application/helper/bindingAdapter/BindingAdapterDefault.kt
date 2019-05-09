@@ -58,7 +58,7 @@ fun loadBackdropImage(view: ImageView, backdropImageUrl: String?) {
 
 }
 
-fun hasNoUlr(url: String?): Boolean {
+private fun hasNoUlr(url: String?): Boolean {
     return url == null || url.isEmpty()
 }
 

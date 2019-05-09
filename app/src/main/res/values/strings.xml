@@ -6,6 +6,7 @@
     <string name="unknown_error">Unknown error, contact your system administrator</string>
     <string name="no_internet_connection_error">No internet connection</string>
 
+    <string name="movie_item_release_date">Release Date:</string>
     <string name="search_title">Search</string>
 
     <string name="movie_detail_title">Movie Details</string>
@@ -19,5 +20,6 @@
     <string name="movie_detail_descriptions_movie_imdb_logo">Imdb Logo</string>
     <string name="invalid_date">Invalid Date</string>
     <string name="search">Search Movies</string>
+    <string name="no_have_movies_in_the_moment">Nao ha filmes no momento</string>
 
 </resources>

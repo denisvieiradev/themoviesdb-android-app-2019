@@ -23,7 +23,7 @@
 - Avoiding lost data when configurations changes.
 - Movies list pagination with UI feedback\'s.
 - Movie details with comics, events, stories and series participation\'s.
-- Custom transitions between list and movie details.
+- Custom transitions between list and movieItem details.
 - Movie search by name.
 
 # Screens

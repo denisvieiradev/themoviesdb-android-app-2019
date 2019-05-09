@@ -3,7 +3,7 @@ package org.js.denisvieira.themoviedbapp.application.modules.selectmovie.dto
 import org.js.denisvieira.themoviedbapp.application.util.getMountedGenresString
 import org.js.denisvieira.themoviedbapp.domain.model.genre.Genre
 
-data class MovieDto(
+data class MovieItemDto(
     val id: Int?,
     val title: String?,
     val posterPath: String?,

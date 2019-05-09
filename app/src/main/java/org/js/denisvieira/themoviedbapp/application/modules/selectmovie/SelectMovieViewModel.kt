@@ -1,12 +1,8 @@
 package org.js.denisvieira.themoviedbapp.application.modules.selectmovie
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import br.com.stant.obras.application.utils.events.Event
 import br.com.stant.obras.application.utils.events.SingleLiveEvent
 import org.js.denisvieira.themoviedbapp.application.helper.BaseViewModel
-import org.js.denisvieira.themoviedbapp.application.helper.viewmodelobserver.BaseObservers
-import org.js.denisvieira.themoviedbapp.application.helper.viewmodelobserver.BaseObserversWithSingleEventOnSuccess
 import org.js.denisvieira.themoviedbapp.application.injections.InjectionUseCase.provideGetMovieGenresUsecase
 import org.js.denisvieira.themoviedbapp.application.injections.InjectionUseCase.provideGetPopularMovies
 import org.js.denisvieira.themoviedbapp.application.injections.InjectionUseCase.provideSearchMoviesUseCase

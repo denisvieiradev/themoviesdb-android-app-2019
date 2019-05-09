@@ -5,15 +5,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.js.denisvieira.themoviedbapp.R
-import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.dto.MovieDto
+import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.dto.MovieItemDto
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.viewholders.LoadingIconItemViewHolder
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.viewholders.MovieItemViewHolder
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.constants.SelectMovieViewTypes.LOADING_FOOTER_VIEW_TYPE
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.constants.SelectMovieViewTypes.MOVIE_ITEM_VIEW_TYPE
 
-class SelectMovieAdapter(var movies: MutableList<MovieDto>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SelectMovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    var movieItems: MutableList<MovieItemDto>
     private var mLoading = false
+
+    init {
+        movieItems = arrayListOf()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
@@ -38,14 +43,14 @@ class SelectMovieAdapter(var movies: MutableList<MovieDto>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is MovieItemViewHolder) {
-            holder.bind(movies[position])
+            holder.bind(movieItems[position])
         } else if (holder is LoadingIconItemViewHolder) {
             holder.showProgressBar()
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position < movies.size || isNotLoading()) {
+        return if (position < movieItems.size || isNotLoading()) {
             MOVIE_ITEM_VIEW_TYPE.value
         } else {
             LOADING_FOOTER_VIEW_TYPE.value
@@ -53,34 +58,34 @@ class SelectMovieAdapter(var movies: MutableList<MovieDto>) : RecyclerView.Adapt
     }
 
     override fun getItemCount(): Int {
-        return if (movies.size == 0 || isNotLoading()) {
-            movies.size
+        return if (movieItems.size == 0 || isNotLoading()) {
+            movieItems.size
         } else {
-            movies.size + 1
+            movieItems.size + 1
         }
     }
 
-    fun addAllMovies(movieDtos: List<MovieDto>?, itemCallback: MoviesAdapterItemCallback) {
-        if (movieDtos != null) {
-            for (movieDto in movieDtos) {
+    fun addAllMovies(movieItemsDtos: List<MovieItemDto>?, itemCallback: MoviesAdapterItemCallback) {
+        if (movieItemsDtos != null) {
+            for (movieDto in movieItemsDtos) {
                 add(movieDto, itemCallback)
             }
         }
     }
 
-    private fun add(planningPlaceDto: MovieDto, itemCallback: MoviesAdapterItemCallback) {
-        movies.add(planningPlaceDto)
-        itemCallback.successAtPositionCallback(movies.size)
+    private fun add(movieItemDto: MovieItemDto, itemCallback: MoviesAdapterItemCallback) {
+        movieItems.add(movieItemDto)
+        itemCallback.successAtPositionCallback(movieItems.size)
     }
 
     fun showLoadingFooter(itemCallback: MoviesAdapterItemCallback) {
         mLoading = true
-        itemCallback.successAtPositionCallback(movies.size + 1)
+        itemCallback.successAtPositionCallback(movieItems.size + 1)
     }
 
     fun hideLoadingFooter(itemCallback: MoviesAdapterItemCallback) {
         mLoading = false
-        itemCallback.successAtPositionCallback(movies.size + 1)
+        itemCallback.successAtPositionCallback(movieItems.size + 1)
     }
 
     private fun isNotLoading(): Boolean {
@@ -88,8 +93,8 @@ class SelectMovieAdapter(var movies: MutableList<MovieDto>) : RecyclerView.Adapt
     }
 
     fun resetStatus() {
-        movies.clear()
-        movies = mutableListOf()
+        movieItems.clear()
+        movieItems = mutableListOf()
         notifyDataSetChanged()
     }
 

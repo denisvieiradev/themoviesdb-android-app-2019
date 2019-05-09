@@ -7,6 +7,7 @@
     <string name="unknown_error">Erro desconhecido! Contate o administrador do sistema</string>
     <string name="no_internet_connection_error">Sem conexão com a internet</string>
 
+    <string name="movie_item_release_date">Data de Lançamento</string>
     <string name="search_title">Search</string>
 
     <string name="movie_detail_title">Detalhes do Filme</string>
@@ -20,5 +21,6 @@
     <string name="movie_detail_descriptions_movie_imdb_logo">Imdb Logo</string>
     <string name="invalid_date">Data Inválida</string>
     <string name="search">Buscar Filmes</string>
+    <string name="no_have_movies_in_the_moment">Não há filmes no momento</string>
 
 </resources>

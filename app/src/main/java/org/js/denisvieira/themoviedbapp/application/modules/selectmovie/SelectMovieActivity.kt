@@ -1,48 +1,45 @@
 package org.js.denisvieira.themoviedbapp.application.modules.selectmovie
 
-import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.select_movie_activity.*
 import org.js.denisvieira.themoviedbapp.R
 import org.js.denisvieira.themoviedbapp.application.helper.RecyclerTouchListener
 import org.js.denisvieira.themoviedbapp.application.helper.listeners.RecyclerViewEndlessScrollListener
 import org.js.denisvieira.themoviedbapp.application.modules.moviedetail.MovieDetailActivity
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.adapters.SelectMovieAdapter
-import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.dto.MovieDto
+import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.dto.MovieItemDtoConverter
 import org.js.denisvieira.themoviedbapp.application.util.WrapContentLinearLayoutManager
-import org.js.denisvieira.themoviedbapp.application.util.extensions.formatToServerDateDefaults
 import org.js.denisvieira.themoviedbapp.application.util.showAlertErrorByStatusCode
+import org.js.denisvieira.themoviedbapp.databinding.SelectMovieActivityBinding
 import org.js.denisvieira.themoviedbapp.domain.constants.AppKeys.KEY_MOVIE_ID
 import org.js.denisvieira.themoviedbapp.domain.data.Cache
 import org.js.denisvieira.themoviedbapp.domain.model.genre.Genre
 import org.js.denisvieira.themoviedbapp.domain.model.movie.Movie
-import java.text.SimpleDateFormat
-import java.util.*
 
 class SelectMovieActivity : AppCompatActivity() {
 
     private val firstPage = 1
 
     private lateinit var mSelectMovieViewModel: SelectMovieViewModel
-    private lateinit var mBinding: org.js.denisvieira.themoviedbapp.databinding.SelectMovieActivityBinding
+    private lateinit var mBinding: SelectMovieActivityBinding
     private lateinit var mMoviesScrollListener: RecyclerViewEndlessScrollListener
 
     private var mCurrentPage: Int                        = firstPage
     private var mCurrentSearchText: String?              = null
-    private var mSelectMovieAdapter : SelectMovieAdapter = SelectMovieAdapter(arrayListOf())
+    private var mSelectMovieAdapter : SelectMovieAdapter = SelectMovieAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +49,7 @@ class SelectMovieActivity : AppCompatActivity() {
         mBinding.lifecycleOwner = this
 
         mSelectMovieViewModel.loadMovieGenres()
+
         startObservers()
         setupComponents()
     }
@@ -72,7 +70,17 @@ class SelectMovieActivity : AppCompatActivity() {
     private fun setupComponents() {
         setupToolbar()
         setupMainRecyclerView()
-        setupOnItemTouchListenerToRecyclerView()
+        configureOnItemTouchListenerOnMainRecyclerView()
+    }
+
+    private fun setupToolbar() {
+        val toolbar = this.mBinding.selectMovieMainToolbar
+        val appCompatActivity = this as AppCompatActivity?
+        val actionBar: AppCompatActivity? = appCompatActivity
+
+        actionBar?.setSupportActionBar(toolbar)
+        actionBar?.supportActionBar?.setDisplayShowTitleEnabled(true)
+        actionBar?.title = getString(R.string.app_name)
     }
 
     private fun setupSearchViewComponent(menu: Menu) {
@@ -80,14 +88,10 @@ class SelectMovieActivity : AppCompatActivity() {
 
         val searchItem = menu.findItem(R.id.action_search)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView: SearchView? = getSearchView(searchItem)
+        val searchView: SearchView? = searchItem.actionView as SearchView?
 
         searchView?.setOnQueryTextListener(getOnSearchTextListener())
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-    }
-
-    private fun getSearchView(menuItem : MenuItem): SearchView? {
-        return menuItem.actionView as SearchView?
     }
 
     private fun getOnSearchTextListener(): SearchView.OnQueryTextListener {
@@ -98,6 +102,7 @@ class SelectMovieActivity : AppCompatActivity() {
                 }
 
                 mCurrentSearchText = queryText
+
                 return true
             }
 
@@ -105,7 +110,6 @@ class SelectMovieActivity : AppCompatActivity() {
                 searchMoviesAfterSearch(queryText)
                 return true
             }
-
         }
     }
 
@@ -113,7 +117,7 @@ class SelectMovieActivity : AppCompatActivity() {
         return queryText.isBlank() && currentSearchText != null
     }
 
-    fun searchMoviesAfterSearch(queryText: String = "") {
+    private fun searchMoviesAfterSearch(queryText: String = "") {
         resetStateOnSubmitTextOnSearch()
 
         if(queryText.isBlank()){
@@ -124,16 +128,21 @@ class SelectMovieActivity : AppCompatActivity() {
         }
     }
 
+    private fun hideKeyboard() {
+        val inputManager:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
+    }
+
     private fun setupMainRecyclerView() {
         val linearLayoutManager = getDefaultLinearLayoutManager(this)
         mMoviesScrollListener   = getDefaultScrollListenerToMainRecyclerView(linearLayoutManager)
 
-        selectMovieMainRecyclerView.adapter                  = mSelectMovieAdapter
-        selectMovieMainRecyclerView.isNestedScrollingEnabled = false
-        selectMovieMainRecyclerView.layoutManager            = linearLayoutManager
+        mBinding.selectMovieMainRecyclerView.adapter                  = mSelectMovieAdapter
+        mBinding.selectMovieMainRecyclerView.isNestedScrollingEnabled = false
+        mBinding.selectMovieMainRecyclerView.layoutManager            = linearLayoutManager
 
-        selectMovieMainRecyclerView.setHasFixedSize(true)
-        selectMovieMainRecyclerView.addOnScrollListener(mMoviesScrollListener)
+        mBinding.selectMovieMainRecyclerView.setHasFixedSize(true)
+        mBinding.selectMovieMainRecyclerView.addOnScrollListener(mMoviesScrollListener)
     }
 
     private fun getDefaultScrollListenerToMainRecyclerView(linearLayoutManager: LinearLayoutManager): RecyclerViewEndlessScrollListener {
@@ -142,13 +151,15 @@ class SelectMovieActivity : AppCompatActivity() {
                 if (mCurrentPage == page) {
                     mCurrentPage++
 
-                    loadMovies(mCurrentSearchText ?: "", mCurrentPage)
+                    loadMoreMoviesOnScroll(mCurrentSearchText ?: "", mCurrentPage)
                 }
             }
         }
     }
 
-    private fun loadMovies(searchText: String, page: Int) {
+    private fun loadMoreMoviesOnScroll(searchText: String, page: Int) {
+        mBinding.selectMovieEmptyListTextView.visibility = GONE
+
         if (searchText.isBlank()) {
             mSelectMovieViewModel.loadPopularMovies(page)
         } else {
@@ -156,38 +167,32 @@ class SelectMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupOnItemTouchListenerToRecyclerView() {
-        selectMovieMainRecyclerView.addOnItemTouchListener(
+    private fun configureOnItemTouchListenerOnMainRecyclerView() {
+        mBinding.selectMovieMainRecyclerView.addOnItemTouchListener(
             RecyclerTouchListener(this,
-                selectMovieMainRecyclerView, object : RecyclerTouchListener.SimpleOnClickListener {
-            override fun onClick(view: View, position: Int) {
-                val intent = Intent(applicationContext, MovieDetailActivity::class.java)
-                val bundle = Bundle()
-                val itemId = mSelectMovieAdapter.movies[position].id
+                mBinding.selectMovieMainRecyclerView, object : RecyclerTouchListener.SimpleOnClickListener {
+                    override fun onClick(view: View, position: Int) {
+                        val itemId = mSelectMovieAdapter.movieItems[position].id
 
-                bundle.putInt(KEY_MOVIE_ID, itemId!!)
+                        itemId?.let { goToMovieDetailScreen(it) }
+                    }
 
-                intent.putExtras(bundle)
-
-                startActivity(intent)
-            }
-
-        })
+                })
         )
+    }
+
+    private fun goToMovieDetailScreen(itemId: Int) {
+        val intent = Intent(applicationContext, MovieDetailActivity::class.java)
+        val bundle = Bundle()
+
+        bundle.putInt(KEY_MOVIE_ID, itemId!!)
+        intent.putExtras(bundle)
+
+        startActivity(intent)
     }
 
     private fun getDefaultLinearLayoutManager(context: Context?): LinearLayoutManager {
         return WrapContentLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-    }
-
-    private fun setupToolbar() {
-        val toolbar = this.mBinding.selectMovieToolbar
-        val appCompatActivity = this as AppCompatActivity?
-        val actionBar: AppCompatActivity? = appCompatActivity
-
-        actionBar?.setSupportActionBar(toolbar)
-        actionBar?.supportActionBar?.setDisplayShowTitleEnabled(true)
-        actionBar?.title = getString(R.string.app_name)
     }
 
     private fun startOnErrorMainDataObserver() {
@@ -201,49 +206,34 @@ class SelectMovieActivity : AppCompatActivity() {
         mCurrentPage       = firstPage
         mCurrentSearchText = ""
 
+        mBinding.selectMovieEmptyListTextView.visibility = GONE
+
         mSelectMovieAdapter.resetStatus()
         mMoviesScrollListener.resetState()
     }
 
     private fun startOnSuccessMainDataObserver() {
-        mSelectMovieViewModel.onSuccessMainDataObserver.observe(this, androidx.lifecycle.Observer { response ->
-            if(isNotNullOrEmpty(response)){
-                val newMovies = mapMovieDtos(response ?: arrayListOf())
+        mSelectMovieViewModel.onSuccessMainDataObserver.observe(this, Observer { response ->
+            if(isNotNullOrEmptyOnMoviesResponse(response)){
+                val newMovies = MovieItemDtoConverter.convertEntitiesToDtos(response ?: arrayListOf(), this)
 
                 mSelectMovieAdapter.addAllMovies(newMovies,
                         getNotifyItemInsertedWithSuccessAtPositionCallback() )
 
                 mSelectMovieAdapter.notifyDataSetChanged()
-
-                mBinding.progressBar.visibility = View.GONE
+            } else if (isNullOrEmptyAndIsFirstPageOnMoviesResponse(response)) {
+                mBinding.selectMovieEmptyListTextView.visibility = VISIBLE
             }
+
+            mBinding.selectMovieMainContentLoadingProgressBar.visibility = GONE
         })
     }
 
-    private fun mapMovieDtos(response: List<Movie>) : List<MovieDto>{
-        return response.map {
-            movie -> mapMovieDto(movie)}
+    private fun isNullOrEmptyAndIsFirstPageOnMoviesResponse(response: List<Movie>?): Boolean {
+        return response.isNullOrEmpty() && mCurrentPage == 1
     }
 
-    private fun mapMovieDto(movie: Movie): MovieDto {
-        return MovieDto(movie.id, movie.title, movie.posterPath, movie.genres, formatReleaseDate(movie.releaseDate))
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    fun formatReleaseDate(dateString: String?): String? {
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
-
-        try {
-            val date : Date = formatter.parse(dateString) as Date
-            return date.formatToServerDateDefaults()
-        } catch (e : Exception) {
-
-        }
-
-        return getString(R.string.invalid_date)
-    }
-
-    private fun isNotNullOrEmpty(response: List<Movie>?): Boolean {
+    private fun isNotNullOrEmptyOnMoviesResponse(response: List<Movie>?): Boolean {
         return !response.isNullOrEmpty()
     }
 
@@ -261,15 +251,15 @@ class SelectMovieActivity : AppCompatActivity() {
 
     private fun startIsLoadingMainDataObserver() {
         mSelectMovieViewModel.isLoadingMainDataObserver.observe(this, Observer {
-            if(it == true) showLoadingRecyclerViewFooter() else hideLoadingRecyclerViewFooter()
+            if(it == true) showLoadingIconOnRecyclerViewFooter() else hideLoadingIconOnRecyclerViewFooter()
         })
     }
 
-    private fun showLoadingRecyclerViewFooter() {
+    private fun showLoadingIconOnRecyclerViewFooter() {
         mSelectMovieAdapter.showLoadingFooter(getNotifyItemInsertedWithSuccessAtPositionCallback())
     }
 
-    private fun hideLoadingRecyclerViewFooter() {
+    private fun hideLoadingIconOnRecyclerViewFooter() {
         mSelectMovieAdapter.hideLoadingFooter(object: SelectMovieAdapter.MoviesAdapterItemCallback {
             override fun successAtPositionCallback(position: Int) {
                 mBinding.selectMovieMainRecyclerView.post {
@@ -287,11 +277,6 @@ class SelectMovieActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun hideKeyboard() {
-        val inputManager:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
 }

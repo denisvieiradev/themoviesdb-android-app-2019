@@ -43,7 +43,7 @@ If you wish run tests should choose **mockdebug** build variant .
 ## Screens
 
  Listing movies             |  Movie details             | Searching Movie                    
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------
+:-------------------------:|:-------------------------:|:-------------------------:
 <img src="gifs/listing_movies.gif" width="180" height="320">  |    <img src="gifs/show_movie_details.gif" width="180" height="320">  |    <img src="gifs/search_movies.gif" width="180" height="320">
 
 

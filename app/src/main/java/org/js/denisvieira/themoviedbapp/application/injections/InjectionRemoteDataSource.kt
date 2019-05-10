@@ -1,7 +1,6 @@
 package org.js.denisvieira.themoviedbapp.application.injections
 
-import org.js.denisvieira.themoviedbapp.application.injections.InjectionApiDataSource.provideGenresApiDataSource
-import org.js.denisvieira.themoviedbapp.application.injections.InjectionApiDataSource.provideMoviesApiDataSource
+import org.js.denisvieira.themoviedbapp.InjectionApiDataSource
 import org.js.denisvieira.themoviedbapp.services.remote.genres.GenresRemoteDataSource
 import org.js.denisvieira.themoviedbapp.services.remote.genres.GenresRemoteDataSourceImpl
 import org.js.denisvieira.themoviedbapp.services.remote.movies.MoviesRemoteDataSource
@@ -10,11 +9,11 @@ import org.js.denisvieira.themoviedbapp.services.remote.movies.MoviesRemoteDataS
 object InjectionRemoteDataSource {
 
     fun provideMoviesRemoteDataSource(): MoviesRemoteDataSource {
-        return MoviesRemoteDataSourceImpl(provideMoviesApiDataSource())
+        return MoviesRemoteDataSourceImpl(InjectionApiDataSource.provideMoviesApiDataSource())
     }
 
     fun provideGenresRemoteDataSource(): GenresRemoteDataSource {
-        return GenresRemoteDataSourceImpl(provideGenresApiDataSource())
+        return GenresRemoteDataSourceImpl(InjectionApiDataSource.provideGenresApiDataSource())
     }
 
 

@@ -2,16 +2,25 @@ package org.js.denisvieira.themoviedbapp.modules.selectmovie
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
+import androidx.test.rule.ActivityTestRule
 import org.js.denisvieira.themoviedbapp.support.createPage
 import org.js.denisvieira.themoviedbapp.support.fixtures.Seeds
 import org.hamcrest.Matchers
 import org.js.denisvieira.themoviedbapp.R
+import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.SelectMovieActivity
 import org.js.denisvieira.themoviedbapp.modules.BaseFragmentTest
+import org.js.denisvieira.themoviedbapp.pages.SelectMoviePage
+import org.js.denisvieira.themoviedbapp.testutils.RecyclerViewMatcher.withRecyclerView
 import org.junit.*
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
+
+/**
+ * Ui tests for the implementation of [SelectMovieActivity]
+ */
 
 @RunWith(Enclosed::class)
 @LargeTest
@@ -21,68 +30,34 @@ class SelectMovieActivityTest {
 
         @Rule
         @JvmField
-        var activityTestRule: ActivityTestRule<LoginActivity> = ActivityTestRule(LoginActivity::class.java)
+        var activityTestRule: ActivityTestRule<SelectMovieActivity> = ActivityTestRule(SelectMovieActivity::class.java)
 
-        lateinit var loginPage: LoginPage
+        lateinit var mSelectMoviePage: SelectMoviePage
 
         @Before
         fun init() {
-            loginPage = createPage<LoginPage>()
+            mSelectMoviePage = createPage<SelectMoviePage>()
         }
 
 
     }
 
-    class ContextWhenPassValidParams : DescribeLoginAction() {
+    class ContextWhenLoadMovieList : DescribeLoginAction() {
 
         @Test
-        fun it_should_call_select_construction_site_screen() {
-            val selectConstructionSitePage = loginPage.doLogin(Seeds.UserLogin.complete)
-            Assert.assertThat(selectConstructionSitePage.selectConstructionSiteToolbarTitle(),
-                    Matchers.equalTo(getResourceString(R.string.select_construction_site_construction_site)))
+        fun it_should_show_movie_list_correctly() {
+            onView(withRecyclerView(R.id.select_movie_main_recycler_view)
+                .atPositionOnView(0, R.id.movie_item_title_text_view))
+                .check(matches(isDisplayed()))
         }
 
     }
 
-    class ContextWhenPassEmptyParams : DescribeLoginAction() {
-
-        @Before
-        fun before() {
-            loginPage.doLogin(Seeds.UserLogin.withoutData)
-        }
+    class ContextWhenSearchMovie : DescribeLoginAction() {
 
         @Test
-        fun it_should_show_empty_messages() {
-            onView(withId(R.id.login_email_text_input_layout)).check(matches(hasTextInputLayoutErrorText(getResourceString(R.string
-                    .login_errors_not_empty))))
-            onView(withId(R.id.login_password_text_input_layout)).check(matches(hasTextInputLayoutErrorText(getResourceString(R.string
-                    .login_errors_not_empty))))
-        }
-    }
+        fun it_should_change_first_element_on_list() {
 
-    class ContextWhenPassInvalidEmail : DescribeLoginAction() {
-        @Before
-        fun before() {
-            loginPage.doLogin(Seeds.UserLogin.wrongEmail)
-        }
-
-        @Test
-        fun it_should_show_invalid_grant_message() {
-            onView(withId(R.id.error_auth_text_view)).check(matches(withText(getResourceString(R.string
-                    .login_errors_invalid_grant))))
-        }
-    }
-
-    class ContextWhenPassInvalidPassword : DescribeLoginAction() {
-        @Before
-        fun before() {
-            loginPage.doLogin(Seeds.UserLogin.wrongPassword)
-        }
-
-        @Test
-        fun it_should_show_invalid_grant_message() {
-            onView(withId(R.id.error_auth_text_view)).check(matches(withText(getResourceString(R.string
-                    .login_errors_invalid_grant))))
         }
     }
 

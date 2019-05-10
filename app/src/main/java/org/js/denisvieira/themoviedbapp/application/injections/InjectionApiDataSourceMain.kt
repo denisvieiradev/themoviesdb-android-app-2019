@@ -4,7 +4,7 @@ import org.js.denisvieira.themoviedbapp.services.ApiDataSource.Companion.createS
 import org.js.denisvieira.themoviedbapp.services.remote.genres.GenresApiDataSource
 import org.js.denisvieira.themoviedbapp.services.remote.movies.MoviesApiDataSource
 
-object InjectionApiDataSource {
+open class InjectionApiDataSourceMain {
 
     fun provideMoviesApiDataSource(): MoviesApiDataSource {
         return createService(MoviesApiDataSource::class.java)

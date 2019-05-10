@@ -16,7 +16,7 @@ import org.hamcrest.Matchers.allOf
 
 abstract class Page {
 
-    abstract fun trait(): org.hamcrest.Matcher<View>
+    abstract fun trait(): Matcher<View>
 
     fun checkTrait(): Boolean {
         var result: Boolean = true
@@ -31,7 +31,6 @@ abstract class Page {
         return result
     }
 
-    @JvmOverloads
     fun findView(vararg matcher: Matcher<View>): ViewInteraction {
 
         return onView(allOf<View>(*matcher))
@@ -41,12 +40,10 @@ abstract class Page {
         findView(matcher = *arrayOf(matcher)).perform(*actions)
     }
 
-    @JvmOverloads
     fun waitAndType(on: Matcher<View>, text: String) {
         waitAndDo(on, ViewActions.replaceText(text), ViewActions.closeSoftKeyboard())
     }
 
-    @JvmOverloads
     fun click(on: Matcher<View>) {
         waitAndDo(on, ViewActions.click())
     }

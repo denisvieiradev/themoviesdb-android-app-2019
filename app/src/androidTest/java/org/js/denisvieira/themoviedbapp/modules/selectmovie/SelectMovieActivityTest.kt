@@ -3,18 +3,17 @@ package org.js.denisvieira.themoviedbapp.modules.selectmovie
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import org.js.denisvieira.themoviedbapp.support.createPage
-import org.js.denisvieira.themoviedbapp.support.fixtures.Seeds
-import org.hamcrest.Matchers
 import org.js.denisvieira.themoviedbapp.R
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.SelectMovieActivity
 import org.js.denisvieira.themoviedbapp.modules.BaseFragmentTest
 import org.js.denisvieira.themoviedbapp.pages.SelectMoviePage
+import org.js.denisvieira.themoviedbapp.support.createPage
 import org.js.denisvieira.themoviedbapp.testutils.RecyclerViewMatcher.withRecyclerView
-import org.junit.*
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 
@@ -39,7 +38,6 @@ class SelectMovieActivityTest {
             mSelectMoviePage = createPage<SelectMoviePage>()
         }
 
-
     }
 
     class ContextWhenLoadMovieList : DescribeLoginAction() {
@@ -59,6 +57,7 @@ class SelectMovieActivityTest {
         fun it_should_change_first_element_on_list() {
 
         }
+
     }
 
 }

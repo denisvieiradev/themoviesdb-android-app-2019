@@ -39,7 +39,6 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-
 ext.global_compileSdkVersion = Integer.parseInt(project.COMPILE_SDK_VERSION)
 ext.global_buildToolsVersion = project.BUILD_TOOLS_VERSION
 ext.global_minSdkVersion     = Integer.parseInt(project.MIN_SDK_VERSION)

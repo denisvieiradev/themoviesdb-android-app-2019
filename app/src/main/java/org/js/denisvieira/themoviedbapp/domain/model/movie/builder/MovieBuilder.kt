@@ -47,9 +47,9 @@ class MovieBuilder {
         releaseDate
     )
 
-    fun oneMovieResponse(): MovieBuilder {
-        this.id = 1
-        this.title = "Movie Title"
+    fun oneMovieResponse(id : Int): MovieBuilder {
+        this.id = id
+        this.title = "Movie Title $id"
 
         return this
     }

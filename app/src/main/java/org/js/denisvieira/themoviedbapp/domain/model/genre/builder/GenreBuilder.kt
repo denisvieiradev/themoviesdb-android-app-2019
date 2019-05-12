@@ -16,9 +16,9 @@ class GenreBuilder {
         name
     )
 
-    fun oneGenreResponse(): GenreBuilder {
-        this.id = 1
-        this.name = "Genre Name"
+    fun oneGenreResponse(id: Int): GenreBuilder {
+        this.id = id
+        this.name = "Genre $id"
 
         return this
     }

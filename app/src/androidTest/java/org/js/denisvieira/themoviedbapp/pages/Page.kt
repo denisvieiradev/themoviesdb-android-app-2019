@@ -8,7 +8,9 @@ import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import org.js.denisvieira.themoviedbapp.support.customs.ViewWith
 import junit.framework.AssertionFailedError
 import org.hamcrest.Matcher
@@ -36,12 +38,20 @@ abstract class Page {
         return onView(allOf<View>(*matcher))
     }
 
+    fun viewIsVisible(vararg matcher: Matcher<View>): ViewInteraction {
+        return onView(allOf<View>(*matcher)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
+    }
+
     fun waitAndDo(matcher: Matcher<View>, vararg actions: ViewAction) {
         findView(matcher = *arrayOf(matcher)).perform(*actions)
     }
 
     fun waitAndType(on: Matcher<View>, text: String) {
         waitAndDo(on, ViewActions.replaceText(text), ViewActions.closeSoftKeyboard())
+    }
+
+    fun waitAndTypeAndPressImeActionButton(on: Matcher<View>, text: String) {
+        waitAndDo(on, ViewActions.replaceText(text), ViewActions.pressImeActionButton())
     }
 
     fun click(on: Matcher<View>) {

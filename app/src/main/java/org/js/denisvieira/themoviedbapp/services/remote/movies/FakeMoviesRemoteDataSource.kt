@@ -14,7 +14,14 @@ import kotlin.concurrent.schedule
 class FakeMoviesRemoteDataSource : MoviesApiDataSource {
 
     override fun searchMovies(queryText: String, page: Int): Observable<Response<MoviesResponse>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return create {
+            Timer().schedule(2000){
+                val upcomingMoviesResponse = getSearchableMovieResponse()
+                val headerMap = getMappedHeader()
+
+                it.onNext(Response.success(upcomingMoviesResponse, Headers.of(headerMap)))
+            }
+        }
     }
 
     override fun upcomingMovies(page: Int): Observable<Response<MoviesResponse>> {
@@ -24,26 +31,41 @@ class FakeMoviesRemoteDataSource : MoviesApiDataSource {
                 val headerMap = getMappedHeader()
 
                 it.onNext(Response.success(upcomingMoviesResponse, Headers.of(headerMap)))
-                    it.onError(Throwable(R.string.unauthorized.toString()))
             }
         }
     }
 
     override fun movie(id: Int): Observable<Response<Movie>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return create {
+            Timer().schedule(2000){
+                val upcomingMoviesResponse = getMovies()[0]
+                val headerMap = getMappedHeader()
+
+                it.onNext(Response.success(upcomingMoviesResponse, Headers.of(headerMap)))
+            }
+        }
+    }
+
+    private fun getSearchableMovieResponse(): MoviesResponse {
+        return MoviesResponse(
+            1,
+            mutableListOf(getMovies()[1]),1,1
+        )
     }
 
     private fun getUpcomingMoviesResponse(): MoviesResponse {
         return MoviesResponse(
             1,
-            getMovies(), 2, 3
+            getMovies(), 1, 4
         )
     }
 
     private fun getMovies(): List<Movie> {
         val movies : MutableList<Movie>? = mutableListOf(
-            MovieBuilder().oneMovieResponse().build(),
-            MovieBuilder().oneMovieResponse().build()
+            MovieBuilder().oneMovieResponse(1).build(),
+            MovieBuilder().oneMovieResponse(2).build(),
+            MovieBuilder().oneMovieResponse(3).build(),
+            MovieBuilder().oneMovieResponse(4).build()
         )
 
         return movies!!.toList()
@@ -51,9 +73,7 @@ class FakeMoviesRemoteDataSource : MoviesApiDataSource {
 
     private fun getMappedHeader(): MutableMap<String, String> {
         return mutableMapOf(
-            "application/json" to "charset=utf-8",
-            "teste_header" to "y",
-            "-1" to "zz"
+            "application/json" to "charset=utf-8"
         )
     }
 

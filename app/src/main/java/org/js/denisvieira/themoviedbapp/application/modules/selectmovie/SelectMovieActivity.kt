@@ -37,15 +37,15 @@ class SelectMovieActivity : AppCompatActivity() {
     private lateinit var mBinding: SelectMovieActivityBinding
     private lateinit var mMoviesScrollListener: RecyclerViewEndlessScrollListener
 
-    private var mCurrentPage: Int                        = firstPage
-    private var mCurrentSearchText: String?              = null
-    private var mSelectMovieAdapter : SelectMovieAdapter = SelectMovieAdapter()
+    private var mCurrentPage: Int = firstPage
+    private var mCurrentSearchText: String? = null
+    private var mSelectMovieAdapter: SelectMovieAdapter = SelectMovieAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding                = DataBindingUtil.setContentView(this, R.layout.select_movie_activity)
-        mSelectMovieViewModel   = ViewModelProviders.of(this).get(SelectMovieViewModel::class.java)
-        mBinding.viewModel      = mSelectMovieViewModel
+        mBinding = DataBindingUtil.setContentView(this, R.layout.select_movie_activity)
+        mSelectMovieViewModel = ViewModelProviders.of(this).get(SelectMovieViewModel::class.java)
+        mBinding.viewModel = mSelectMovieViewModel
         mBinding.lifecycleOwner = this
 
         mSelectMovieViewModel.loadMovieGenres()
@@ -71,6 +71,13 @@ class SelectMovieActivity : AppCompatActivity() {
         setupToolbar()
         setupMainRecyclerView()
         configureOnItemTouchListenerOnMainRecyclerView()
+        setupSwipeRefreshLayout()
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        mBinding.selectMovieMainSwipeRefreshLayout.setOnRefreshListener {
+            searchMoviesAfterSearch(mCurrentSearchText ?: "")
+        }
     }
 
     private fun setupToolbar() {
@@ -95,9 +102,9 @@ class SelectMovieActivity : AppCompatActivity() {
     }
 
     private fun getOnSearchTextListener(): SearchView.OnQueryTextListener {
-        return object: SearchView.OnQueryTextListener {
+        return object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(queryText: String): Boolean {
-                if(isBlankAndSearchNotFilledInitially(queryText, mCurrentSearchText)){
+                if (isBlankAndSearchNotFilledInitially(queryText, mCurrentSearchText)) {
                     searchMoviesAfterSearch()
                 }
 
@@ -120,7 +127,7 @@ class SelectMovieActivity : AppCompatActivity() {
     private fun searchMoviesAfterSearch(queryText: String = "") {
         resetStateOnSubmitTextOnSearch()
 
-        if(queryText.isBlank()){
+        if (queryText.isBlank()) {
             mSelectMovieViewModel.loadPopularMovies(mCurrentPage)
         } else {
             mSelectMovieViewModel.searchMovies(queryText, mCurrentPage)
@@ -129,24 +136,24 @@ class SelectMovieActivity : AppCompatActivity() {
     }
 
     private fun hideKeyboard() {
-        val inputManager:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
     private fun setupMainRecyclerView() {
         val linearLayoutManager = getDefaultLinearLayoutManager(this)
-        mMoviesScrollListener   = getDefaultScrollListenerToMainRecyclerView(linearLayoutManager)
+        mMoviesScrollListener = getDefaultScrollListenerToMainRecyclerView(linearLayoutManager)
 
-        mBinding.selectMovieMainRecyclerView.adapter                  = mSelectMovieAdapter
+        mBinding.selectMovieMainRecyclerView.adapter = mSelectMovieAdapter
         mBinding.selectMovieMainRecyclerView.isNestedScrollingEnabled = false
-        mBinding.selectMovieMainRecyclerView.layoutManager            = linearLayoutManager
+        mBinding.selectMovieMainRecyclerView.layoutManager = linearLayoutManager
 
         mBinding.selectMovieMainRecyclerView.setHasFixedSize(true)
         mBinding.selectMovieMainRecyclerView.addOnScrollListener(mMoviesScrollListener)
     }
 
     private fun getDefaultScrollListenerToMainRecyclerView(linearLayoutManager: LinearLayoutManager): RecyclerViewEndlessScrollListener {
-        return object: RecyclerViewEndlessScrollListener(linearLayoutManager) {
+        return object : RecyclerViewEndlessScrollListener(linearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int) {
                 if (mCurrentPage == page) {
                     mCurrentPage++
@@ -197,14 +204,13 @@ class SelectMovieActivity : AppCompatActivity() {
 
     private fun startOnErrorMainDataObserver() {
         mSelectMovieViewModel.onErrorMainDataObserver.observe(this, Observer {
-            if(it != null)
-                showAlertErrorByStatusCode(it,this)
+            if (it != null)
+                showAlertErrorByStatusCode(it, this)
         })
     }
 
     private fun resetStateOnSubmitTextOnSearch() {
-        mCurrentPage       = firstPage
-        mCurrentSearchText = ""
+        mCurrentPage = firstPage
 
         mBinding.selectMovieEmptyListTextView.visibility = GONE
 
@@ -214,13 +220,17 @@ class SelectMovieActivity : AppCompatActivity() {
 
     private fun startOnSuccessMainDataObserver() {
         mSelectMovieViewModel.onSuccessMainDataObserver.observe(this, Observer { response ->
-            if(isNotNullOrEmptyOnMoviesResponse(response)){
+            if (isNotNullOrEmptyOnMoviesResponse(response)) {
                 val newMovies = MovieItemDtoConverter.convertEntitiesToDtos(response ?: arrayListOf(), this)
 
-                mSelectMovieAdapter.addAllMovies(newMovies,
-                        getNotifyItemInsertedWithSuccessAtPositionCallback() )
+                mSelectMovieAdapter.addAllMovies(
+                    newMovies,
+                    getNotifyItemInsertedWithSuccessAtPositionCallback()
+                )
 
                 mSelectMovieAdapter.notifyDataSetChanged()
+                mBinding.selectMovieMainSwipeRefreshLayout.isRefreshing = false
+
             } else if (isNullOrEmptyAndIsFirstPageOnMoviesResponse(response)) {
                 mBinding.selectMovieEmptyListTextView.visibility = VISIBLE
             }
@@ -244,14 +254,14 @@ class SelectMovieActivity : AppCompatActivity() {
         })
     }
 
-    private fun setGenresInCache(genres :List<Genre>?) {
+    private fun setGenresInCache(genres: List<Genre>?) {
         if (genres != null)
             Cache.cacheGenres(genres)
     }
 
     private fun startIsLoadingMainDataObserver() {
         mSelectMovieViewModel.isLoadingMainDataObserver.observe(this, Observer {
-            if(it == true) showLoadingIconOnRecyclerViewFooter() else hideLoadingIconOnRecyclerViewFooter()
+            if (it == true) showLoadingIconOnRecyclerViewFooter() else hideLoadingIconOnRecyclerViewFooter()
         })
     }
 
@@ -260,7 +270,7 @@ class SelectMovieActivity : AppCompatActivity() {
     }
 
     private fun hideLoadingIconOnRecyclerViewFooter() {
-        mSelectMovieAdapter.hideLoadingFooter(object: SelectMovieAdapter.MoviesAdapterItemCallback {
+        mSelectMovieAdapter.hideLoadingFooter(object : SelectMovieAdapter.MoviesAdapterItemCallback {
             override fun successAtPositionCallback(position: Int) {
                 mBinding.selectMovieMainRecyclerView.post {
                     mSelectMovieAdapter.notifyItemRemoved(position)

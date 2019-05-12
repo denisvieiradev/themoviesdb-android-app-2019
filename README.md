@@ -5,8 +5,9 @@
 [The Movie DB Android App - Apk](https://drive.google.com/open?id=xx)
 
 ### Main features:
-- List Upcoming Movies
-- Pagination on Upcoming Movie List
+- List Movies
+- Pagination on Movie List
+- Push to refresh movie list 
 - Search Movies
 - Movie Details
 
@@ -42,9 +43,9 @@ If you wish run tests should choose **mockdebug** build variant .
 
 ## Screens
 
- Listing movies             |  Movie details             | Searching Movie                    
-:-------------------------:|:-------------------------:|:-------------------------:
-<img src="gifs/listing_movies.gif" width="180" height="320">  |    <img src="gifs/show_movie_details.gif" width="180" height="320">  |    <img src="gifs/search_movies.gif" width="180" height="320">
+ Listing movies             |  Movie details             | Searching Movie        | Updating Movie List                   
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+<img src="gifs/listing_movies.gif" width="180" height="320">  |    <img src="gifs/show_movie_details.gif" width="180" height="320">  |    <img src="gifs/search_movies.gif" width="180" height="320"> |    <img src="gifs/updating_movies.gif" width="180" height="320">
 
 
 

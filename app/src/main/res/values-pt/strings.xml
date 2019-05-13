@@ -1,6 +1,8 @@
 <resources>
 
-    <string name="app_name">The Movies DB APP</string>
+    <string name="app_name">The Movies DB</string>
+
+    <string name="upcoming_movies">Próximos Lançamentos</string>
 
     <string name="unauthorized">E-mail ou senha incorretos.</string>
     <string name="internal_error">Ocorreu um erro interno.</string>

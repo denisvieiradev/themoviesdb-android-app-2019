@@ -1,9 +1,7 @@
 package org.js.denisvieira.themoviedbapp.modules.selectmovie
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.LargeTest
@@ -11,7 +9,6 @@ import androidx.test.rule.ActivityTestRule
 import org.js.denisvieira.themoviedbapp.R
 import org.js.denisvieira.themoviedbapp.application.modules.selectmovie.SelectMovieActivity
 import org.js.denisvieira.themoviedbapp.modules.BaseFragmentTest
-import org.js.denisvieira.themoviedbapp.modules.moviedetail.MovieDetailActivityTest
 import org.js.denisvieira.themoviedbapp.pages.SelectMoviePage
 import org.js.denisvieira.themoviedbapp.support.createPage
 import org.js.denisvieira.themoviedbapp.testutils.RecyclerViewMatcher.withRecyclerView
@@ -54,7 +51,6 @@ class SelectMovieActivityTest {
         }
 
     }
-
 
     abstract class ContextWhenSearchMovieWithFoundItems : DescribeSelectMovieActivity() {
 

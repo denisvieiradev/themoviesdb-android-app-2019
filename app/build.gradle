@@ -27,15 +27,15 @@ android {
     dataBinding {
         enabled true
     }
-
     signingConfigs {
-        themoviesdb_prod_keystore {
-            keyAlias 'themoviesdb_prod_key'
-            keyPassword 'themoviesdb_prod'
-            storeFile file('themoviesdb_prod.keystore')
-            storePassword 'themoviesdb_prod'
+        prodRelease {
+            storeFile file('/home/denisvieira/Documents/development-projects/personal/TheMovieDBApp/app/themoviesdb_prod.jks')
+            storePassword 'themoviesdb'
+            keyAlias = 'themoviesdb'
+            keyPassword 'themoviesdb'
         }
     }
+
 
     buildTypes {
         release {
@@ -52,19 +52,19 @@ android {
             applicationIdSuffix = ".mock"
             buildConfigField "String", "BASE_URL", "\"http://fake.themoviesdb.com.br\""
             buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"9c2c3dd0ab59829a041af7515e0e0eea\""
-            resValue "string", "login_version", ("Mock " + global_versionName)
+            resValue "string", "app_version", ("Mock " + global_versionName)
         }
         stage {
             applicationIdSuffix = ".stage"
             buildConfigField "String", "BASE_URL", "\"https://stage.api.themoviedb.org/3/\""
             buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"9c2c3dd0ab59829a041af7515e0e0eea\""
-            resValue "string", "login_version", ("Stage " + global_versionName)
+            resValue "string", "app_version", ("Stage " + global_versionName)
         }
         prod {
-            signingConfig signingConfigs.themoviesdb_prod_keystore
+            signingConfig signingConfigs.prodRelease
             buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
             buildConfigField "String", "THE_MOVIE_DB_API_KEY", "\"9c2c3dd0ab59829a041af7515e0e0eea\""
-            resValue "string", "login_version", (" " + global_versionName)
+            resValue "string", "app_version", (" " + global_versionName)
         }
 
     }
@@ -123,6 +123,7 @@ dependencies {
         exclude module: 'recyclerview-v7'
     })
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
 
     // required if you want to use Mockito for unit tests
     testImplementation 'org.mockito:mockito-core:2.27.0'

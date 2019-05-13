@@ -2,7 +2,7 @@
 
 ## Simple app that consuming [TMDB Api](https://www.themoviedb.org/documentation/api)
 
-[The Movie DB Android App - APK DOWNLOAD](https://drive.google.com/open?id=xx)
+[The Movie DB Android App - APK DOWNLOAD](https://drive.google.com/file/d/1zSfGmUcb6mwofGP69O7-STsobGTsPn3Q/view?usp=sharing)
 
 ### Main features:
 - List Movies

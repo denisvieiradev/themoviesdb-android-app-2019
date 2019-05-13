@@ -16,7 +16,7 @@ interface MoviesApiDataSource {
         @Query("page") page: Int
     ): Observable<Response<MoviesResponse>>
 
-    @GET("movie/popular")
+    @GET("movie/upcoming")
     fun upcomingMovies(
         @Query("page") page: Int
     ): Observable<Response<MoviesResponse>>

@@ -3,6 +3,7 @@ package org.js.denisvieira.themoviedbapp.modules.selectmovie
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import org.js.denisvieira.themoviedbapp.R
@@ -25,7 +26,7 @@ import org.junit.runner.RunWith
 @LargeTest
 class SelectMovieActivityTest {
 
-    abstract class DescribeLoginAction : BaseFragmentTest() {
+    abstract class DescribeSelectMovieActivity : BaseFragmentTest() {
 
         @Rule
         @JvmField
@@ -35,15 +36,15 @@ class SelectMovieActivityTest {
 
         @Before
         fun init() {
-            mSelectMoviePage = createPage<SelectMoviePage>()
+            mSelectMoviePage = createPage()
         }
 
     }
 
-    class ContextWhenLoadMovieList : DescribeLoginAction() {
+    class ContextWhenLoadMovieList : DescribeSelectMovieActivity() {
 
         @Test
-        fun it_should_show_movie_list_correctly() {
+        fun it_should_show_first_movie_item_of_the_list_correctly() {
             onView(withRecyclerView(R.id.select_movie_main_recycler_view)
                 .atPositionOnView(0, R.id.movie_item_title_text_view))
                 .check(matches(isDisplayed()))
@@ -51,13 +52,37 @@ class SelectMovieActivityTest {
 
     }
 
-    class ContextWhenSearchMovie : DescribeLoginAction() {
+    abstract class ContextWhenSearchMovieWithFoundItems : DescribeSelectMovieActivity() {
+
+        private val searchText = "Movie Title 2"
+
+        @Before
+        fun clickOnSearchIconAndType() {
+            mSelectMoviePage.doSearch(searchText)
+        }
 
         @Test
-        fun it_should_change_first_element_on_list() {
-
+        fun itShouldShowFirstElementWithSearchTextTitle() {
+            onView(withRecyclerView(R.id.select_movie_main_recycler_view)
+                .atPositionOnView(0, R.id.movie_item_title_text_view))
+                .check(matches(withText(searchText)))
         }
 
     }
 
+    class ContextWhenSearchMovieWithNotFoundItems : DescribeSelectMovieActivity() {
+
+        private val searchText = "Item X"
+
+        @Before
+        fun clickOnSearchIconAndType() {
+            mSelectMoviePage.doSearch(searchText)
+        }
+
+        @Test
+        fun itShouldShowNoElementFoundTextView() {
+            mSelectMoviePage.isShowEmptyListTextView()
+        }
+
+    }
 }

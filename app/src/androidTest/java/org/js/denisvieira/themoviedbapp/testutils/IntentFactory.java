@@ -15,9 +15,11 @@ public class IntentFactory {
         intent.putExtras(bundle);
         return intent;
     }
+
     public static Intent createIntentWithoutBundle(Class targetClass){
         Context targetContext = InstrumentationRegistry.getInstrumentation()
                 .getTargetContext();
         return new Intent(targetContext, targetClass);
     }
+
 }

@@ -2,7 +2,6 @@ package org.js.denisvieira.themoviedbapp.testutils;
 
 import android.content.res.Resources;
 import android.view.View;
-import androidx.annotation.IdRes;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.matcher.BoundedMatcher;
 import io.reactivex.annotations.NonNull;
@@ -14,7 +13,6 @@ import static androidx.core.util.Preconditions.checkNotNull;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
-import static org.hamcrest.Matchers.allOf;
 import static org.js.denisvieira.themoviedbapp.testutils.ColorUtils.withBgColor;
 
 public class RecyclerViewMatcher {

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="org.js.denisvieira.themoviedbapp.application.modules.moviedetail.MovieDetailViewModel" />
+
+        <variable
+            name="movieItem"
+            type="org.js.denisvieira.themoviedbapp.application.modules.moviedetail.dto.MovieDetailDto" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/movie_detail_backdrop_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/movie_detail_descriptions_movie_backdrop_photo"
+            android:scaleType="centerCrop"
+            android:src="@color/lightGray"
+            android:tint="@color/grayTint"
+            app:backdropImageUrl="@{movieItem.backdropPath}"
+            tools:src="@drawable/image_backdrop" />
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/movie_detail_main_app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/movie_detail_main_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:theme="@style/ToolbarColoredBackArrow">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
+
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/movie_detail_main_content_loading_progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:indeterminate="true"
+                    android:theme="@style/WhiteProgressBar"
+                    app:visibleOrGone="@{safeUnbox(viewModel.isLoadingMainDataObserver)}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp">
+
+                    <ImageView
+                        android:id="@+id/movie_detail_poster_image_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="163dp"
+                        android:layout_weight="2"
+                        android:contentDescription="@string/movie_detail_descriptions_movie_poster_photo"
+                        app:posterImageUrl="@{movieItem.posterPath}"
+                        tools:src="@drawable/ic_image_placeholder" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/movie_detail_title_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:text="@{movieItem.title}"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="30sp"
+                            tools:text="Avengers: Infinity Wars" />
+
+
+                        <TextView
+                            android:id="@+id/movie_detail_genres_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@{movieItem.mountedGenres}"
+                            android:textColor="@android:color/white"
+                            tools:text="Action, Adventure, Fantasy" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/movie_detail_vote_average_text_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_gravity="start"
+                                android:text="@{movieItem.voteAverage}"
+                                android:textColor="@android:color/white"
+                                android:textSize="25sp"
+                                tools:text="8.0" />
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="28dp"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:layout_toEndOf="@+id/movie_detail_vote_average_text_view"
+                                android:contentDescription="@string/movie_detail_descriptions_movie_imdb_logo"
+                                android:src="@drawable/imdb" />
+
+                            <TextView
+                                android:id="@+id/movie_detail_vote_count_text_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:text="@{@string/movie_detail_votes(movieItem.voteCount)}"
+                                android:textColor="@android:color/white"
+                                tools:text="100 votes" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="30dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_popularity"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/movie_detail_popularity_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@{movieItem.popularity}"
+                            android:textColor="@android:color/white"
+                            tools:text="8.286" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_release"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/movie_detail_release_date_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@{movieItem.releaseDateFormatted}"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            tools:text="May 20, 2019" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/movie_detail_runtime"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/movie_detail_runtime_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@{@string/movie_detail_minutes(movieItem.runtime)}"
+                            android:textColor="@android:color/white"
+                            tools:text="286 minutes" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/movie_detail_overview_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="30dp"
+                    android:text="@{movieItem.overview}"
+                    android:textColor="@android:color/white"
+                    tools:text="The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+</layout>
+

@@ -3,6 +3,8 @@
           xmlns:dist="http://schemas.android.com/apk/distribution"
           package="org.js.denisvieira.themoviedbapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <dist:module dist:instant="true"/>
 
     <application
@@ -12,13 +14,22 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+                android:name=".application.modules.selectmovie.SelectMovieActivity"
+                android:configChanges="orientation|screenSize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable" />
         </activity>
+
+        <activity android:name=".application.modules.moviedetail.MovieDetailActivity"
+                  android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

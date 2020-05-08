@@ -11,7 +11,7 @@
 - Search Movies
 - Movie Details
 
-Teste Github Actions #1
+Teste Github Actions #2
 
 ### The Project 
 

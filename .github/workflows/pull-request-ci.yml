@@ -1,12 +1,11 @@
 name: Pull Request CI
 
 on:
-  pull_request:
+  push:
     branches:
       - '*'
       - '!master'
       - '!release*'
-
 # Um workflow é composto de um ou mais Jobs que podem ser executados sequencialmente ou em paralelo
 jobs:
   # Este Workflow contém dois Jobs chamados "test" e "build-and-deploy"

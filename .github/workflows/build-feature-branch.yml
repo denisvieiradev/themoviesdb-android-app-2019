@@ -13,7 +13,7 @@ jobs:
   test:
     name: Run Unit Tests
     # O tipo de runner em que o job será executado
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  
     # Steps representam a sequencia de tarefas usando o shell runners que serão executadas como parte do Job
     steps:
     - uses: actions/checkout@v1
@@ -22,6 +22,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    #  Step para rodar testes unitários
     - name: Unit tests
       run: bash ./gradlew test --stacktrace
   

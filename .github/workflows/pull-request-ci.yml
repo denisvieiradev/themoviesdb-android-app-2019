@@ -3,8 +3,8 @@ name: Pull Request CI
 on:
   pull_request:
     branches:
-      - 'master'
-      - 'release*'
+      - '!master'
+      - '!release*'
 
 # Um workflow é composto de um ou mais Jobs que podem ser executados sequencialmente ou em paralelo
 jobs:

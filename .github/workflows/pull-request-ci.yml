@@ -10,7 +10,7 @@ on:
     branches:
       - '*'
       - '!master'
-      - '!release*
+      - '!release*'
 
 # Um workflow é composto de um ou mais Jobs que podem ser executados sequencialmente ou em paralelo
 jobs:

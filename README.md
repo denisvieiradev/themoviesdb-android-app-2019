@@ -1,4 +1,5 @@
 # The Movies DB APP
+Teste Github Actions #4
 
 ## Simple app that consuming [TMDB Api](https://www.themoviedb.org/documentation/api)
 
@@ -11,7 +12,6 @@
 - Search Movies
 - Movie Details
 
-Teste Github Actions #4
 
 ### The Project 
 

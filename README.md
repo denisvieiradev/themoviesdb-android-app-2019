@@ -1,5 +1,5 @@
 # The Movies DB APP
-Teste Github Actions #5
+Teste Github Actions #6
 
 ## Simple app that consuming [TMDB Api](https://www.themoviedb.org/documentation/api)
 

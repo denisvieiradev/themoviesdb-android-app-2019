@@ -23,7 +23,7 @@ jobs:
         java-version: 1.8
     #  Step para rodar testes unitários
     - name: Unit tests
-      run: bash ./gradlew test --stacktrace
+      run: ./gradlew test --stacktrace
   
   build-and-generate-apk:
     # O tipo de runner em que o job será executado
@@ -41,7 +41,7 @@ jobs:
       run: echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;20.0.5594570"
     # Step para Buildar o Projeto e gerar a APK
     - name: Build Debug 
-      run: cd ./gradlew assembleDebug
+      run: ./gradlew assembleDebug
     # Step para salvar a APK como Artifact
     - name: Upload APK on Github Artifact
       uses: actions/upload-artifact@v1

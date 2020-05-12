@@ -51,7 +51,7 @@ class GetMovieGenresUseCaseActionTest {
 
         private val response = arrayListOf<Genre>(
             GenreBuilder()
-                .oneGenreResponse()
+                .oneGenreResponse(1)
                 .build()
         )
 

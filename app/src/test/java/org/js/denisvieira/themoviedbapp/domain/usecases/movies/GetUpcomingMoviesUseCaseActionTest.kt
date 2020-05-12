@@ -48,7 +48,7 @@ class GetUpcomingMoviesUseCaseActionTest {
 
         private val response = arrayListOf<Movie>(
             MovieBuilder()
-                .oneMovieResponse()
+                .oneMovieResponse(1)
                 .build()
         )
 

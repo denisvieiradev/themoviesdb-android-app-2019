@@ -11,6 +11,7 @@
 - Search Movies
 - Movie Details
 
+
 ### The Project 
 
 - Using [Kotlin Programming Language](https://kotlinlang.org/)

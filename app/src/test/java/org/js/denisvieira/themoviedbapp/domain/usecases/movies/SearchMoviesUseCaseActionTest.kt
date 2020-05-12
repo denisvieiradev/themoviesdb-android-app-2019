@@ -51,7 +51,7 @@ class SearchMoviesUseCaseActionTest {
 
         private val response = arrayListOf<Movie>(
             MovieBuilder()
-                .oneMovieResponse()
+                .oneMovieResponse(1)
                 .build()
         )
 

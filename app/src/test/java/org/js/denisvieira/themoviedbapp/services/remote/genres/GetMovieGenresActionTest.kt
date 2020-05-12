@@ -29,8 +29,8 @@ class GetMovieGenresActionTest {
 
         private fun getMovieGenresRsponse(): GenreResponse {
             val genres : MutableList<Genre>? = mutableListOf(
-                GenreBuilder().oneGenreResponse().build(),
-                GenreBuilder().oneGenreResponse().build()
+                GenreBuilder().oneGenreResponse(1).build(),
+                GenreBuilder().oneGenreResponse(2).build()
             )
 
             return GenreResponse(

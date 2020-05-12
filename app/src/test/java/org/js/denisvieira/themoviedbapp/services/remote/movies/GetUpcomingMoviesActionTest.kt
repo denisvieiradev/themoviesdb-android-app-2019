@@ -29,8 +29,8 @@ class GetUpcomingMoviesActionTest {
 
         private fun getUpcomingMoviesResponse(): MoviesResponse {
             val movies : MutableList<Movie>? = mutableListOf(
-                MovieBuilder().oneMovieResponse().build(),
-                MovieBuilder().oneMovieResponse().build()
+                MovieBuilder().oneMovieResponse(1).build(),
+                MovieBuilder().oneMovieResponse(2).build()
             )
             return MoviesResponse(
                 1,

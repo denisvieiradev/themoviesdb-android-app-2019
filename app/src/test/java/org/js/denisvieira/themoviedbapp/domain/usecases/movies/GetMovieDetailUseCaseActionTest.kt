@@ -47,7 +47,7 @@ class GetMovieDetailUseCaseActionTest {
     internal class ContextOnSuccess : DescribeGetMovieDetailUseCase() {
 
         private val response = MovieBuilder()
-            .oneMovieResponse()
+            .oneMovieResponse(1)
             .build()
 
         @Before

@@ -1,3 +1,5 @@
+![Master Release CI](https://github.com/denisvieira05/themoviesdb-android-app/workflows/Master%20Release%20CI/badge.svg?branch=master)
+
 # The Movies DB APP
 
 ## Simple app that consuming [TMDB Api](https://www.themoviedb.org/documentation/api)
